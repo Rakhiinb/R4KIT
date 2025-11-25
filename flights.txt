@@ -1,0 +1,10 @@
+GA101 Garuda_Indonesia Bali 08:00 1500000 0
+JT202 Lion_Air Jakarta 10:00 800000 0
+QZ303 AirAsia Singapore 13:00 1200000 0
+SQ404 Singapore_Airlines Tokyo 18:00 5000000 0
+GA105 Garuda_Indonesia Surabaya 07:00 1100000 0
+B808 Batik_Air Medan 15:00 1300000 0
+SJ111 Sriwijaya_Air Makassar 12:00 1400000 0
+GA102 Garuda_Indonesia Bali 19:00 1600000 0
+QZ305 AirAsia Bangkok 09:00 2000000 0
+JL777 Japan_Airlines Tokyo 23:00 5500000 0
