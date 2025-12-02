@@ -4,6 +4,6 @@
 #include "data_commons.h" // Mengimport struct
 #include <string>
 
-int cariPenerbangan(const Penerbangan data[], int n, string keyword);
+int cariPenerbangan(const Penerbangan data[], int n, std::string keyword);
 
 #endif
