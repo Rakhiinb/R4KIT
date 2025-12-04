@@ -41,13 +41,25 @@ int cariPenerbangan(const Penerbangan data[], int n, string keyword)
 
 
 // 2. FILTERING
-void filterTujuan(Penerbangan data[], int n, string tujuan){
-    cout << "Hasil Filter Tujuan " << tujuan << endl;
+void filterPenerbangan(Penerbangan data[], int n, string jamFilter, int maxHarga) {
+    cout << "\n=== HASIL FILTER JAM: " << jamFilter 
+         << " | HARGA <= " << maxHarga << " ===\n";
 
-    for (int i = 0; i < n; i++)
-        if (data[i].tujuan == tujuan)
-            cout << data[i].maskapai << " | "
-                 << data[i].jam << " | " << data[i].harga << endl;
+    bool ketemu = false;
+
+    for (int i = 0; i < n; i++) {
+        if (data[i].jam == jamFilter && data[i].harga <= maxHarga) {
+            cout << data[i].kode << " | "
+                 << data[i].maskapai << " | "
+                 << data[i].tujuan << " | "
+                 << data[i].jam << " | "
+                 << data[i].harga << endl;
+            ketemu = true;
+        }
+    }
+
+    if (!ketemu)
+        cout << "Data tidak ditemukan.\n";
 }
 
 // 3. Gacha or shuffle (Fisher–Yates Shuffle)
