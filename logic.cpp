@@ -22,6 +22,16 @@ int inputData(Penerbangan data[], string filename){
     return n;
 }
 
+string konversiWaktu(string jam) {
+    int angkaJam = stoi(jam.substr(0, 2));
+
+    if (angkaJam >= 5 && angkaJam <= 11)
+        return "pagi";
+    else if (angkaJam >= 12 && angkaJam <= 17)
+        return "siang";
+    else
+        return "malam";
+}
 
 // 1. Searching Algorithm (Linear Search)
 int cariPenerbangan(const Penerbangan data[], int n, string keyword)
@@ -41,31 +51,28 @@ int cariPenerbangan(const Penerbangan data[], int n, string keyword)
 
 
 // 2. FILTERING
-void filterPenerbangan(Penerbangan data[], int n, string jamFilter, int maxHarga) {
-    cout << "\n=== HASIL FILTER JAM: " << jamFilter 
-         << " | HARGA <= " << maxHarga << " ===\n";
-
-    bool ketemu = false;
+int filterPenerbangan(Penerbangan data[], int n, HasilFilter hasil[], string waktuInput, int hargaMax) {
+    int jumlahHasil = 0;
 
     for (int i = 0; i < n; i++) {
-        if (data[i].jam == jamFilter && data[i].harga <= maxHarga) {
-            cout << data[i].kode << " | "
-                 << data[i].maskapai << " | "
-                 << data[i].tujuan << " | "
-                 << data[i].jam << " | "
-                 << data[i].harga << endl;
-            ketemu = true;
+        string kategori = konversiWaktu(data[i].jam);
+
+        if (kategori == waktuInput && data[i].harga <= hargaMax) {
+            hasil[jumlahHasil].kode = data[i].kode;
+            hasil[jumlahHasil].maskapai = data[i].maskapai;
+            hasil[jumlahHasil].tujuan = data[i].tujuan;
+            hasil[jumlahHasil].waktu = data[i].jam;
+            hasil[jumlahHasil].harga = data[i].harga;
+            jumlahHasil++;
         }
     }
 
-    if (!ketemu)
-        cout << "Data tidak ditemukan.\n";
+    return jumlahHasil;
 }
 
 // 3. Gacha or shuffle (Fisher–Yates Shuffle)
-void gachaKursi(Penerbangan &p){
-    srand(time(0));
-
+int gachaKursi(Penerbangan &p)
+{
     int kosong[TOTAL_KURSI];
     int totalKosong = 0;
 
@@ -74,18 +81,15 @@ void gachaKursi(Penerbangan &p){
             kosong[totalKosong++] = i;
 
     if (totalKosong == 0)
-    {
-        cout << "Kursi penuh!" << endl;
-        return;
-    }
+        return -1;
 
     int acak = rand() % totalKosong;
     int hasil = kosong[acak];
-
+    
     p.kursi[hasil] = "BOOKED";
     p.jumlahTerisi++;
 
-    cout << "Kursi Anda: " << hasil + 1 << endl;
+    return hasil + 1;
 }
 
 
