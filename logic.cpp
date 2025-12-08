@@ -51,7 +51,7 @@ int cariPenerbangan(const Penerbangan data[], int n, string keyword)
 
 
 // 2. FILTERING
-int filterPenerbangan(Penerbangan data[], int n, HasilFilter hasil[], string waktuInput, int hargaMax) {
+int filterPenerbangan(Penerbangan data[], int n, Penerbangan hasil[], string waktuInput, int hargaMax) {
     int jumlahHasil = 0;
 
     for (int i = 0; i < n; i++) {
@@ -61,7 +61,7 @@ int filterPenerbangan(Penerbangan data[], int n, HasilFilter hasil[], string wak
             hasil[jumlahHasil].kode = data[i].kode;
             hasil[jumlahHasil].maskapai = data[i].maskapai;
             hasil[jumlahHasil].tujuan = data[i].tujuan;
-            hasil[jumlahHasil].waktu = data[i].jam;
+            hasil[jumlahHasil].jam = data[i].jam;
             hasil[jumlahHasil].harga = data[i].harga;
             jumlahHasil++;
         }
@@ -69,7 +69,6 @@ int filterPenerbangan(Penerbangan data[], int n, HasilFilter hasil[], string wak
 
     return jumlahHasil;
 }
-
 // 3. Gacha or shuffle (Fisher–Yates Shuffle)
 int gachaKursi(Penerbangan &p)
 {
@@ -83,13 +82,19 @@ int gachaKursi(Penerbangan &p)
     if (totalKosong == 0)
         return -1;
 
-    int acak = rand() % totalKosong;
-    int hasil = kosong[acak];
-    
+    for (int i = totalKosong - 1; i > 0; i--) {
+        int j = rand() % (i + 1);
+        int temp = kosong[i];
+        kosong[i] = kosong[j];
+        kosong[j] = temp;
+    }
+    int hasil = kosong[0];
+
     p.kursi[hasil] = "BOOKED";
     p.jumlahTerisi++;
 
     return hasil + 1;
 }
+
 
 
