@@ -13,7 +13,6 @@ struct Penerbangan
     std::string maskapai;
     std::string tujuan;
     std::string jam;
-    std::string kursi[TOTAL_KURSI];
     int harga;
     int jumlahTerisi;
 };
@@ -23,15 +22,6 @@ struct Penumpang
     std::string nama;
     std::string kodePenerbangan;
     int nomorKursi;
-};
-
-struct HasilFilter 
-{
-    std::string kode;
-    std::string maskapai;
-    std::string tujuan;
-    std::string waktu;   
-    int harga;
 };
 
 #endif

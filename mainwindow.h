@@ -17,7 +17,6 @@ public:
     ~MainWindow();
 
 private slots:
-    // --- DAFTAR SLOT (Fungsi Tombol) ---
     void on_btnCari_clicked();
     void on_tabelPenerbangan_cellClicked(int row, int column);
     void on_btnGacha_clicked();
