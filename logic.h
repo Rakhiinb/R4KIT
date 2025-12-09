@@ -4,27 +4,8 @@
 #include "data_commons.h" // Mengimport struct
 #include <string>
 
-// LOAD DATA
-int inputData(Penerbangan data[], std::string filename);
-
-// SEARCHING
-int cariPenerbangan(Penerbangan data[], int n, std::string keyword);
-
-// KONVERSI
-string konversiWaktu(string jam); 
-
-// FILTERING
-void filterPenerbangan(Penerbangan data[], int n, std::string tujuan);
-
-// SHUFFLE + GACHA
-int gachaKursi(Penerbangan &p);
-
-// BOOKING
-void booking(Penerbangan &p, Penumpang penumpang[], int &totalPenumpang);
-
-// CANCEL / DEDUP
-void cancelBooking(Penumpang penumpang[], int &totalPenumpang);
-
-// Kalo ada lagi tambahin aja (icad)
+int jumlahBooking(std::string kodePesawat);
+void loadDataPenerbangan(Penerbangan data[], int &jumlahData);
+void cariPenerbangan(const Penerbangan data[], int n, std::string keyword, Penerbangan hasil[], int &nHasil);
 
 #endif
