@@ -53,21 +53,6 @@ void loadDataPenerbangan(Penerbangan data[], int &jumlahData)
     file.close();
 }
 
-void simpanPenumpang(const Penumpang &p)
-{
-    ofstream file("bookings.txt", ios::app);
-
-    if (!file.is_open())
-    {
-        cout << "Gagal membuka bookings.txt\n";
-        return;
-    }
-
-    file << p.nama << " " << p.kodePenerbangan << " " << p.nomorKursi << "\n";
-
-    file.close();
-}
-
 // 1. Searching Algorithm (Linear Search)
 void cariPenerbangan(const Penerbangan data[], int n, string keyword, Penerbangan hasil[], int &nHasil)
 {
@@ -85,44 +70,59 @@ void cariPenerbangan(const Penerbangan data[], int n, string keyword, Penerbanga
     }
 }
 
-void deduplikasi() {
-    Penumpang arr[500];
-    int n = 0;
+// 4. Deduplication Algorithm
+void bersihkanDuplikatBooking() {
+    Penumpang semua[MAX_BOOKING];
+    Penumpang bersih[MAX_BOOKING];
+    int nSemua = 0, nBersih = 0;
 
+    // Baca Semua Data ke Array 
     ifstream fin("bookings.txt");
-    while (fin >> arr[n].nama >> arr[n].kodePenerbangan >> arr[n].nomorKursi)
-    {
-        n++;
+    if (!fin.is_open()) return;
+    while (fin >> semua[nSemua].nama >> semua[nSemua].kodePenerbangan >> semua[nSemua].nomorKursi) {
+        nSemua++;
+        if (nSemua >= MAX_BOOKING) break;
     }
     fin.close();
 
-    Penumpang bersih[500];
-    int m = 0;
-
-    for (int i = 0; i < n; i++)
-    {
+    // Filter Duplikat
+    for (int i = 0; i < nSemua; i++) {
         bool duplikat = false;
-
-        for (int j = 0; j < m; j++)
-        {
-            if (arr[i].kodePenerbangan == bersih[j].kodePenerbangan &&
-                arr[i].nomorKursi == bersih[j].nomorKursi)
-            {
+        for (int j = 0; j < nBersih; j++) {
+            // Duplikat jika Kode Pesawat sama dan Nomor Kursi sama
+            if (semua[i].kodePenerbangan == bersih[j].kodePenerbangan && 
+                semua[i].nomorKursi == bersih[j].nomorKursi) {
                 duplikat = true;
                 break;
             }
         }
-
-        if (!duplikat)
-        {
-            bersih[m] = arr[i];
-            m++;
+        // Jika bersih, simpan
+        if (!duplikat) {
+            bersih[nBersih] = semua[i];
+            nBersih++;
         }
     }
+
+    // Tulis Ulang File dengan Data Bersih
     ofstream fout("bookings.txt");
-    for (int i = 0; i < m; i++)
-    {
-        fout << bersih[i].nama << " " << bersih[i].kodePenerbangan << " "<< bersih[i].nomorKursi << "\n";
+    for (int i = 0; i < nBersih; i++) {
+        fout << bersih[i].nama << " " << bersih[i].kodePenerbangan << " " << bersih[i].nomorKursi << endl;
     }
     fout.close();
+}
+
+void simpanPenumpang(Penumpang p)
+{
+    // Tambahkan data baru
+    ofstream file("bookings.txt", ios::app);
+
+    if (!file.is_open())
+    {
+        cout << "Gagal membuka bookings.txt\n";
+        return;
+    }
+    file << p.nama << " " << p.kodePenerbangan << " " << p.nomorKursi << "\n";
+    file.close();
+    // Jalankan pembersihan
+    bersihkanDuplikatBooking();
 }
